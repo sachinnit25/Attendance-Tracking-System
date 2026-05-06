@@ -1,5 +1,7 @@
 📌 Smart Attendance App using Blockchain
 
+🌟 **Live Demo:** [https://attendance-tracking-system-ruby.vercel.app/](https://attendance-tracking-system-ruby.vercel.app/)
+
 A secure and transparent attendance management system built using Blockchain Technology to eliminate proxy attendance and prevent data tampering.
 
 🚀 Overview
@@ -13,7 +15,8 @@ Lack of transparency
 This project solves these problems by using Blockchain, ensuring that once attendance is recorded, it cannot be altered or deleted.
 
 🎯 Features
-🔐 Secure Authentication System
+🔐 Secure Authentication System (Professor Registration & Login)
+👨‍🏫 Professor Profile Management (Track Education & Subjects)
 📍 Location-based Attendance (optional)
 🔗 Blockchain Integration (Tamper-proof records)
 📊 Real-time Attendance Tracking
