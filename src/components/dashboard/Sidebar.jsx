@@ -92,26 +92,29 @@ const Sidebar = () => {
       </nav>
 
       <div style={{ marginTop: 'auto', paddingTop: 'var(--spacing-md)', borderTop: '1px solid var(--border-color)' }}>
-        <Link to="/" style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1rem',
-          padding: '0.85rem 1.25rem',
-          borderRadius: 'var(--radius-md)',
-          color: '#f87171',
-          textDecoration: 'none',
-          fontWeight: '600',
-          transition: 'all var(--transition-fast)',
-          border: '1px solid transparent'
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.1)';
-          e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.2)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.backgroundColor = 'transparent';
-          e.currentTarget.style.borderColor = 'transparent';
-        }}
+        <Link 
+          to="/" 
+          onClick={() => localStorage.removeItem('is_authenticated')}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem',
+            padding: '0.85rem 1.25rem',
+            borderRadius: 'var(--radius-md)',
+            color: '#f87171',
+            textDecoration: 'none',
+            fontWeight: '600',
+            transition: 'all var(--transition-fast)',
+            border: '1px solid transparent'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.1)';
+            e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.2)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = 'transparent';
+            e.currentTarget.style.borderColor = 'transparent';
+          }}
         >
           <LogOut size={20} />
           Sign Out

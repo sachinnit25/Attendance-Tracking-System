@@ -12,6 +12,7 @@ const defaultSettings = {
 
 const Settings = () => {
   const [settings, setSettings] = useState(defaultSettings);
+  const [credentials, setCredentials] = useState({ id: 'admin', password: 'password' });
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
@@ -23,6 +24,15 @@ const Settings = () => {
         console.error('Failed to load settings', error);
       }
     }
+    
+    const storedAuth = localStorage.getItem('prof_credentials');
+    if (storedAuth) {
+      try {
+        setCredentials(JSON.parse(storedAuth));
+      } catch (error) {
+        console.error('Failed to load credentials', error);
+      }
+    }
   }, []);
 
   const updateSetting = (key, value) => {
@@ -32,6 +42,7 @@ const Settings = () => {
 
   const handleSave = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+    localStorage.setItem('prof_credentials', JSON.stringify(credentials));
     setSaved(true);
     setTimeout(() => setSaved(false), 2500);
   };
@@ -155,6 +166,39 @@ const Settings = () => {
             Choose the network used for attendance transaction logging.
           </p>
         </section>
+
+        <hr style={{ border: 'none', borderTop: '1px solid var(--border-color)', margin: '1rem 0' }} />
+        
+        <div>
+          <h3 style={{ margin: '0 0 1rem 0', fontSize: '1.25rem', fontWeight: '700', color: 'var(--text-primary)' }}>Professor Credentials</h3>
+          <div style={{ display: 'grid', gap: '1.5rem' }}>
+            <section style={{ display: 'grid', gap: '0.5rem' }}>
+              <label style={{ fontWeight: '700', color: 'var(--text-primary)' }}>Professor ID</label>
+              <input
+                type="text"
+                value={credentials.id}
+                onChange={(e) => {
+                  setCredentials(prev => ({ ...prev, id: e.target.value }));
+                  setSaved(false);
+                }}
+                style={{ width: '280px', padding: '0.85rem 1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
+              />
+            </section>
+            
+            <section style={{ display: 'grid', gap: '0.5rem' }}>
+              <label style={{ fontWeight: '700', color: 'var(--text-primary)' }}>Password</label>
+              <input
+                type="password"
+                value={credentials.password}
+                onChange={(e) => {
+                  setCredentials(prev => ({ ...prev, password: e.target.value }));
+                  setSaved(false);
+                }}
+                style={{ width: '280px', padding: '0.85rem 1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
+              />
+            </section>
+          </div>
+        </div>
       </div>
 
       {saved && (

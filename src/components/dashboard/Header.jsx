@@ -1,17 +1,44 @@
 import React, { useEffect, useState } from 'react';
 import { Bell, Search } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const PROFESSOR_NAME_KEY = 'overview_professor_name';
+const PROFILE_KEY = 'prof_profile';
 
 const Header = () => {
   const [professorName, setProfessorName] = useState('Prof. Anderson');
+  const [department, setDepartment] = useState('Computer Science');
+  const navigate = useNavigate();
 
-  useEffect(() => {
+  const loadProfileData = () => {
     const savedName = localStorage.getItem(PROFESSOR_NAME_KEY);
     if (savedName) {
       const cleanName = savedName.trim();
       setProfessorName(cleanName ? cleanName : 'Prof. Anderson');
     }
+
+    const storedProfile = localStorage.getItem(PROFILE_KEY);
+    if (storedProfile) {
+      try {
+        const parsed = JSON.parse(storedProfile);
+        if (parsed.department) {
+          setDepartment(parsed.department);
+        }
+      } catch (e) {
+        // Ignore
+      }
+    }
+  };
+
+  useEffect(() => {
+    loadProfileData();
+
+    // Listen for the custom event we fire in Profile.jsx
+    window.addEventListener('profile_updated', loadProfileData);
+    
+    return () => {
+      window.removeEventListener('profile_updated', loadProfileData);
+    };
   }, []);
 
   const displayInitial = professorName.charAt(0).toUpperCase();
@@ -69,17 +96,32 @@ const Header = () => {
           }}></span>
         </button>
         
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer' }}>
+        <div 
+          onClick={() => navigate('/dashboard/profile')}
+          style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '0.75rem', 
+            cursor: 'pointer',
+            padding: '0.25rem 0.5rem',
+            borderRadius: 'var(--radius-md)',
+            transition: 'background-color 0.2s',
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.05)'}
+          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+          title="View Professor Profile"
+        >
           <div style={{ textAlign: 'right' }}>
             <div style={{ fontSize: '0.875rem', fontWeight: '600', color: 'var(--text-primary)' }}>{professorName}</div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Computer Science</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{department}</div>
           </div>
           <div style={{
             width: '40px', height: '40px',
             borderRadius: '50%',
             background: 'var(--accent-gradient)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontWeight: '600', color: '#fff'
+            fontWeight: '600', color: '#fff',
+            boxShadow: '0 0 15px rgba(59, 130, 246, 0.4)'
           }}>
             {displayInitial}
           </div>

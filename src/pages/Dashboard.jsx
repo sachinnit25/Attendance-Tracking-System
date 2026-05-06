@@ -6,6 +6,7 @@ import Students from './Students';
 import StudentDetail from './StudentDetail';
 import Attendance from './Attendance';
 import Settings from './Settings';
+import Profile from './Profile';
 
 const PlaceholderPage = ({ title, description }) => (
   <div style={{ padding: 'var(--spacing-lg)', backgroundColor: 'var(--bg-primary)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-soft)' }}>
@@ -46,6 +47,7 @@ const Dashboard = () => {
             <Route path="students/:studentName" element={<StudentDetail />} />
             <Route path="attendance" element={<Attendance />} />
             <Route path="settings" element={<Settings />} />
+            <Route path="profile" element={<Profile />} />
             <Route path="*" element={<Overview />} />
           </Routes>
         </main>
